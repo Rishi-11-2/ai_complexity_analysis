@@ -2,3 +2,5 @@ fastapi
 uvicorn
 google-generativeai
 litellm
+openai
+pydantic
