@@ -28,7 +28,7 @@ class AnalyzeRequest(BaseModel):
     provider: str  # Allowed values: "google", "openai", "huggingface"
 
 PROMPT_TEMPLATE = """
-For the following code, provide only the time and space complexities in your answer. Do not include any additional explanation.
+For the following code, please perform an internal, step-by-step chain-of-thought reasoning process to determine its time and space complexities. However, do not include your internal reasoning in the final output; only provide the final result in the format below.
 
 Expected Output:
 Time Complexity: 
@@ -37,6 +37,7 @@ Space Complexity:
 Code:
 {code}
 """
+
 
 @app.post("/analyze")
 async def analyze_code(request: AnalyzeRequest):
