@@ -9,6 +9,8 @@ from litellm import acompletion
 import os 
 # Create FastAPI app
 from openai import OpenAI
+import uvicorn
+
 app = FastAPI()
 
 # Enable CORS (adjust allowed origins for production)
@@ -38,7 +40,6 @@ Code:
 {code}
 """
 
-
 @app.post("/analyze")
 async def analyze_code(request: AnalyzeRequest):
 
@@ -61,7 +62,7 @@ async def analyze_code(request: AnalyzeRequest):
                     api_key=request.api_key
                 )
                 # Call the chat completions endpoint.
-                response = await loop.run_in_executor(
+                response = await loop.run_in_executor( 
                 None,
                 lambda:hf_client.chat.completions.create(
                     model=request.model_name,
@@ -98,5 +99,4 @@ async def analyze_code(request: AnalyzeRequest):
         raise HTTPException(status_code=500, detail=str(e))
     
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
